@@ -11,5 +11,6 @@ public class SimpleShooterEditorTarget : TargetRules
 		//DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.AddRange( new string[] { "SimpleShooter" } );
 		bOverrideBuildEnvironment = true;
+		CppStandard = CppStandardVersion.Cpp20;
 	}
 }
