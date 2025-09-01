@@ -38,7 +38,6 @@ void AGun::PullTrigger()
 	OwnerController->GetPlayerViewPoint(Location, Rotation);
 
 	const FVector End = Location + Rotation.Vector() * MaxRange;
-	// TODO : Line trace
 	FHitResult Hit;
 	const bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
 	if (!bSuccess)
@@ -46,7 +45,8 @@ void AGun::PullTrigger()
 		return;
 	}
 
-	DrawDebugPoint(GetWorld(), Hit.Location, 20.f, FColor::Red, true);
+	const FVector ShootDirection = -Rotation.Vector();
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShootDirection.Rotation());
 }
 
 // Called when the game starts or when spawned

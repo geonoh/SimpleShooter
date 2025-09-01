@@ -37,4 +37,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float MaxRange = 1000.f;
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* ImpactEffect;
 };
