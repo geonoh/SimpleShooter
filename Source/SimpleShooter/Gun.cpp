@@ -3,6 +3,7 @@
 
 #include "Gun.h"
 
+#include "Engine/DamageEvents.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -27,7 +28,7 @@ void AGun::PullTrigger()
 	{
 		return;
 	}
-	const AController* OwnerController = OwnerPawn->GetController();
+	AController* OwnerController = OwnerPawn->GetController();
 	if (!OwnerController)
 	{
 		return;
@@ -45,8 +46,17 @@ void AGun::PullTrigger()
 		return;
 	}
 
-	const FVector ShootDirection = -Rotation.Vector();
-	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShootDirection.Rotation());
+	const FVector ShotDirection = -Rotation.Vector();
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
+	FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
+
+	AActor* HitActor = Hit.GetActor();
+	if (!HitActor)
+	{
+		return;
+	}
+
+	HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 }
 
 // Called when the game starts or when spawned
