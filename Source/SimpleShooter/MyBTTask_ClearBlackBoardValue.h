@@ -15,5 +15,7 @@ class SIMPLESHOOTER_API UMyBTTask_ClearBlackBoardValue : public UBTTask_Blackboa
 	GENERATED_BODY()
 
 public:
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	
 	UMyBTTask_ClearBlackBoardValue();
 };
