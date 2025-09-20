@@ -10,19 +10,23 @@ void AShooterAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (AIBehavior != nullptr)
+	if (!AIBehavior)
 	{
-		RunBehaviorTree(AIBehavior);
-
-		const APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(),0);
-		if (PlayerPawn)
-		{
-			GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
-		}
+		return;
 	}
+	
+	RunBehaviorTree(AIBehavior);
+
+	const APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(),0);
+	if (!PlayerPawn)
+	{
+		return;
+	}
+	
+	GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), PlayerPawn->GetActorLocation());
 }
 
-void AShooterAIController::Tick(float DeltaSeconds)
+void AShooterAIController::Tick(const float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
