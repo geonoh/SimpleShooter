@@ -66,6 +66,16 @@ bool AShooterCharacter::IsDead() const
 	return Health <= 0.f;
 }
 
+void AShooterCharacter::Shoot()
+{
+	if (!Gun)
+	{
+		return;
+	}
+	
+	Gun->PullTrigger();
+}
+
 void AShooterCharacter::MoveForward(float AxisValue)
 {
 	AddMovementInput(GetActorForwardVector() * AxisValue);
@@ -84,14 +94,4 @@ void AShooterCharacter::LookUpRate(float AxisValue)
 void AShooterCharacter::LookRightRate(float AxisValue)
 {
 	AddControllerYawInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
-}
-
-void AShooterCharacter::Shoot()
-{
-	if (!Gun)
-	{
-		return;
-	}
-	
-	Gun->PullTrigger();
 }
