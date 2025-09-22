@@ -1,0 +1,46 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "BTService_PlayerLocationSeen.h"
+
+#include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Kismet/GameplayStatics.h"
+
+UBTService_PlayerLocationSeen::UBTService_PlayerLocationSeen()
+{
+	NodeName = "Update player location If seen";
+}
+
+void UBTService_PlayerLocationSeen::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+{
+	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
+
+	const APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (!PlayerPawn)
+	{
+		return;
+	}
+
+	AAIController* AIController = OwnerComp.GetAIOwner();
+	if (!AIController)
+	{
+		return;
+	}
+
+	UBlackboardComponent* BlackboardComponent = OwnerComp.GetBlackboardComponent();
+	if (!BlackboardComponent)
+	{
+		return;
+	}
+
+	if (AIController->LineOfSightTo(PlayerPawn))
+	{
+		BlackboardComponent->SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
+	}
+	else
+	{
+		BlackboardComponent->ClearValue(GetSelectedBlackboardKey());
+	}
+	
+}
