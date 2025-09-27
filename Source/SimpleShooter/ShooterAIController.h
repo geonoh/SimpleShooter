@@ -14,7 +14,9 @@ class SIMPLESHOOTER_API AShooterAIController : public AAIController
 {
 	GENERATED_BODY()
 
+public:
 	virtual void BeginPlay() override;
+	bool IsDead() const;
 
 private:
 	UPROPERTY(EditAnywhere)

@@ -3,6 +3,7 @@
 
 #include "ShooterAIController.h"
 
+#include "ShooterCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -24,4 +25,16 @@ void AShooterAIController::BeginPlay()
 	}
 	
 	GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), PlayerPawn->GetActorLocation());
+}
+
+bool AShooterAIController::IsDead() const
+{
+	const AShooterCharacter* ShooterCharacter = Cast<AShooterCharacter>(GetPawn());
+	if (!ShooterCharacter)
+	{
+		// When pawn does not exist? then pawn is dead(and destroyed)
+		return true;
+	}
+
+	return ShooterCharacter->IsDead();
 }

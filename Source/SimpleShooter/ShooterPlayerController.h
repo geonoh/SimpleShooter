@@ -21,6 +21,9 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> WinWidgetClass;
+	
+	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> LoseWidgetClass;
 	
 	UPROPERTY(EditAnywhere)
