@@ -43,4 +43,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float Damage = 10.f;
+
+	bool GunTrace(FHitResult& OutHitResult, FVector& OutShotDirection) const;
+	AController* GetOwnerController() const;
 };
