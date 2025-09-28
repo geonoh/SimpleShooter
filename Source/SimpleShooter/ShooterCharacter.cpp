@@ -81,6 +81,11 @@ bool AShooterCharacter::IsDead() const
 	return Health <= 0.f;
 }
 
+float AShooterCharacter::GetHealthPercent() const
+{
+	return Health / MaxHealth;
+}
+
 void AShooterCharacter::Shoot()
 {
 	if (!Gun)
