@@ -4,10 +4,27 @@
 #include "ShooterPlayerController.h"
 #include "UserWidget.h"
 
+void AShooterPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	HUDWidget = CreateWidget(this, HUDClass);
+	if (!HUDWidget)
+	{
+		return;
+	}
+
+	HUDWidget->AddToViewport();
+}
+
 void AShooterPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner)
 {
 	Super::GameHasEnded(EndGameFocus, bIsWinner);
 
+	if (HUDWidget)
+	{
+		HUDWidget->RemoveFromParent();
+	}
+	
 	if (bIsWinner)
 	{
 		if (UUserWidget* WinWidget = CreateWidget(this, WinWidgetClass))
